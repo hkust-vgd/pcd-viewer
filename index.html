@@ -39,10 +39,12 @@
 	</div>
 	
 	<script type="module">
-        let url = new URL(window.location.href);
-        let searchParams = new URLSearchParams(url.search);        
-        let pathname = searchParams.get('name');
-        let point_cloud_url = `/pointclouds/`+ pathname +`/cloud.js`;
+        const params = new URLSearchParams(location.search);       
+        const url = new URL(
+        params.get("url") || "vol_total",
+        "https://statics.hkustvgd.com/pointclouds/",
+    );
+        let point_cloud_url = url +`/cloud.js`;
 		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
 		
 		viewer.setEDLEnabled(false);
@@ -51,7 +53,7 @@
 		viewer.loadSettingsFromURL();
 		viewer.setBackground("skybox");
 		
-		//viewer.setDescription("Point cloud courtesy of <a target='_blank' href='https://www.sigeom.ch/'>sigeom sa</a>");
+		//viewer.setDescription("");
 		
 		viewer.loadGUI(() => {
 			viewer.setLanguage('en');
@@ -61,7 +63,7 @@
 		});
 		
 		// Load and add point cloud to scene
-		Potree.loadPointCloud(point_cloud_url, "sigeom.sa", e => {
+		Potree.loadPointCloud(point_cloud_url, "", e => {
 			let scene = viewer.scene;
 			let pointcloud = e.pointcloud;
 			
