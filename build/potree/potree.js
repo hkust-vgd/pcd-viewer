@@ -66354,8 +66354,6 @@ void main() {
 							'content-type': 'multipart/byteranges',
 							'Range': `bytes=${first}-${last}`,
 						},
-                        mode: "cors", // no-cors, *cors, same-origin
-                        credentials: "omit", // include, *same-origin, omit
 					});
 
 					buffer = await response.arrayBuffer();
@@ -66560,8 +66558,6 @@ void main() {
 					'content-type': 'multipart/byteranges',
 					'Range': `bytes=${first}-${last}`,
 				},
-                mode: "cors", // no-cors, *cors, same-origin
-                credentials: "omit", // include, *same-origin, omit
 			});
 
 
@@ -66693,10 +66689,7 @@ void main() {
 
 		static async load(url){
 
-			let response = await fetch(url,{
-                mode: "cors", // no-cors, *cors, same-origin
-                credentials: "omit", // include, *same-origin, omit
-            });
+			let response = await fetch(url);
 			let metadata = await response.json();
 
 			let attributes = OctreeLoader.parseAttributes(metadata.attributes);
