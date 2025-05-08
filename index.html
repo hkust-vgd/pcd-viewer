@@ -64,8 +64,8 @@
 
 		// Function to check if file exists
 		function checkFileExists(url, callback) {
-			fetch(url, { method: 'HEAD' })
-					.then(response => callback(response.ok))
+			fetch(url, { method: 'HEAD', mode: 'no-cors' })
+					.then(() => callback(true)) // Can't reliably detect 404 in no-cors mode
 					.catch(() => callback(false));
 		}
 
