@@ -47,7 +47,7 @@
 	let point_cloud_url = url +`/cloud.js`;
 	window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
 
-	viewer.setEDLEnabled(false);
+	viewer.setEDLEnabled(true);
 	viewer.setFOV(60);
 	viewer.setPointBudget(1_000_000);
 	viewer.loadSettingsFromURL();
