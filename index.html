@@ -62,11 +62,28 @@
 			viewer.toggleSidebar();
 		});
 
-		// Function to check if file exists
-		function checkFileExists(url, callback) {
-			fetch(url, { method: 'HEAD', mode: 'no-cors' })
-					.then(() => callback(true)) // Can't reliably detect 404 in no-cors mode
-					.catch(() => callback(false));
+		// Function to check if URL exists with CORS handling
+		async function checkUrlExists(url) {
+			try {
+				const response = await fetch(url, {
+					method: 'HEAD', // Using HEAD is faster as it doesn't download the content
+					mode: 'cors'   // This is the default mode but explicit is good
+				});
+
+				if (response.ok) {
+					console.log("URL exists and is accessible");
+					return true;
+				} else {
+					console.log("URL exists but returned status:", response.status);
+					return false;
+				}
+			} catch (error) {
+				console.log("Error accessing URL:", error.message);
+				if (error.name === 'TypeError') {
+					console.log("This is likely a CORS error - the server doesn't allow cross-origin requests");
+				}
+				return false;
+			}
 		}
 
 		// Function to load point cloud with common settings
@@ -87,13 +104,13 @@
 		}
 
 		// Check for metadata.json first
-		checkFileExists(point_cloud_url, (exists) => {
+		checkUrlExists(point_cloud_url, (exists) => {
 			if (exists) {
 				loadPointCloud(point_cloud_url);
 			} else {
 				// Fall back to check for cloud.js
 				const cloudJsUrl = `${url}/cloud.js`;
-				checkFileExists(cloudJsUrl, (jsExists) => {
+				checkUrlExists(cloudJsUrl, (jsExists) => {
 					if (jsExists) {
 						loadPointCloud(cloudJsUrl);
 					} else {
