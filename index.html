@@ -59,7 +59,10 @@
 		viewer.setLanguage('en');
 		$("#menu_tools").next().show();
 		$("#menu_clipping").next().show();
-		// viewer.toggleSidebar();
+		// Check if the device is not a mobile device
+		if (!/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+			viewer.toggleSidebar();
+		}
 	});
 
 	// Load and add point cloud to scene
