@@ -49,7 +49,7 @@
 
 	viewer.setEDLEnabled(true);
 	viewer.setFOV(60);
-	viewer.setPointBudget(1_000_000);
+	viewer.setPointBudget(3_000_000);
 	viewer.loadSettingsFromURL();
 	viewer.setBackground("skybox");
 
@@ -77,7 +77,8 @@
 
 		scene.addPointCloud(pointcloud);
 
-		viewer.fitToScreen();
+		viewer.fitToScreen(2,1);
+		viewer.setView("B");  // default set to Back view
 		// scene.view.setView(
 		// 	[589974.341, 231698.397, 986.146],
 		// 	[589851.587, 231428.213, 715.634],
